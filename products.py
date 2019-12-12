@@ -1,11 +1,23 @@
+# 检查档案的有无
+import os
+
 products = []
-with open('products.csv', 'r', encoding='utf-8')as f:
-    for line in f:
-        if '商品,价格' in line:
-            continue
-        name, price = line.strip().split(',')
-        products.append([name, price])
-print(products)
+if os.path.isfile('products.csv'):
+    print('find it')
+    # 读取档案
+    with open('products.csv', 'r', encoding='utf-8')as f:
+        for line in f:
+            if '商品,价格' in line:
+                continue
+            name, price = line.strip().split(',')
+            products.append([name, price])
+    print(products)
+
+else:
+    print('not find the file')
+
+
+# 补充档案
 while True:
     name = input('enter the name of the product:')
     if name == 'q':
@@ -13,6 +25,7 @@ while True:
     price = input('enter the price of the product:')
     products.append([name.strip(), price.strip()])
 print(products)
+# 写档案
 with open('products.csv', 'w', encoding='utf-8')as f:
     f.write('商品,价格\n')
     for p in products:
